@@ -11,7 +11,6 @@ import java.util.Map;
 
 import static org.keycloak.testsuite.broker.BrokerTestConstants.*;
 
-@Ignore
 public class KcSamlSignedBrokerTest extends KcSamlBrokerTest {
 
     @Override
