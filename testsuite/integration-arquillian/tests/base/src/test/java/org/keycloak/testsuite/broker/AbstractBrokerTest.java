@@ -231,6 +231,8 @@ public abstract class AbstractBrokerTest extends AbstractKeycloakTest {
 
         accountLoginPage.clickSocial(getIDPAlias());
 
+        waitForPage("/auth/realms/" + providerRealmName() + "/");
+
         Assert.assertTrue("Driver should be on the provider realm page right now", driver.getCurrentUrl().contains("/auth/realms/" + providerRealmName() + "/"));
 
         accountLoginPage.login(getUserLogin(), getUserPassword());
