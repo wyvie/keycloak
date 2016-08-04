@@ -10,33 +10,33 @@
 */
 package org.freedesktop.dbus;
 
-import static org.freedesktop.dbus.Gettext.getString;
+import cx.ath.matthew.debug.Debug;
+import cx.ath.matthew.unix.UnixSocket;
+import cx.ath.matthew.unix.UnixSocketAddress;
+import cx.ath.matthew.utils.Hexdump;
 
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.IOException;
 import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.lang.reflect.Method;
 import java.net.InetSocketAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.text.ParseException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.text.Collator;
+import java.text.ParseException;
 import java.util.Arrays;
 import java.util.Random;
 import java.util.Vector;
-import cx.ath.matthew.unix.UnixSocket;
-import cx.ath.matthew.unix.UnixServerSocket;
-import cx.ath.matthew.unix.UnixSocketAddress;
-import cx.ath.matthew.utils.Hexdump;
-import cx.ath.matthew.debug.Debug;
+
+import static org.freedesktop.dbus.Gettext.getString;
 
 public class Transport
 {
@@ -759,22 +759,12 @@ public class Transport
       int types = 0;
       if ("unix".equals(address.getType())) {
          types = SASL.AUTH_EXTERNAL;
-         if (null != address.getParameter("listen")) {
-            mode = SASL.MODE_SERVER;
-            UnixServerSocket uss = new UnixServerSocket();
-            if (null != address.getParameter("abstract"))
-               uss.bind(new UnixSocketAddress(address.getParameter("abstract"), true));
-            else if (null != address.getParameter("path"))
-               uss.bind(new UnixSocketAddress(address.getParameter("path"), false));
-            us = uss.accept();
-         } else {
-            mode = SASL.MODE_CLIENT;
-            us = new UnixSocket();
-            if (null != address.getParameter("abstract"))
-               us.connect(new UnixSocketAddress(address.getParameter("abstract"), true));
-            else if (null != address.getParameter("path"))
-               us.connect(new UnixSocketAddress(address.getParameter("path"), false));
-         }
+         mode = SASL.MODE_CLIENT;
+         us = new UnixSocket();
+         if (null != address.getParameter("abstract"))
+            us.connect(new UnixSocketAddress(address.getParameter("abstract"), true));
+         else if (null != address.getParameter("path"))
+            us.connect(new UnixSocketAddress(address.getParameter("path"), false));
          us.setPassCred(true);
          in = us.getInputStream();
          out = us.getOutputStream();

@@ -18,11 +18,11 @@ public class SssdTest {
 
         String[] attr = {"mail", "givenname", "sn", "telephoneNumber"};
         InfoPipe infoPipe = Sssd.infopipe();
-        Map<String, Variant> attributes = infoPipe.getUserAttributes("john", Arrays.asList(attr));
+        Map<String, Variant> attributes = infoPipe.getUserAttributes("emily", Arrays.asList(attr));
 
         System.out.println(((Vector)attributes.get("mail").getValue()).get(0));
 
-        List<String> groups = infoPipe.getUserGroups("alice");
+        List<String> groups = infoPipe.getUserGroups("emily");
 
         System.out.println(groups);
 
