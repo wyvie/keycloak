@@ -98,7 +98,7 @@ public class Sssd {
         List<String> userGroups = null;
         try {
             InfoPipe infoPipe = Sssd.infopipe();
-            userGroups = infoPipe.getUserGroups("emily");
+            userGroups = infoPipe.getUserGroups(username);
         } catch (Exception e) {
             logger.error("Failed to retrieve user's groups from SSSD", e);
         }
