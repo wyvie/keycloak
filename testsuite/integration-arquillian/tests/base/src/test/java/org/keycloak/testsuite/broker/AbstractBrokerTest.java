@@ -427,4 +427,9 @@ public abstract class AbstractBrokerTest extends AbstractBaseBrokerTest {
         String link = errorPage.getBackToApplicationLink();
         Assert.assertTrue(link.endsWith("/auth/realms/consumer/account"));
     }
+
+    @Test
+    public void testTestTest() {
+	    Assert.assertTrue(true);
+    }
 }
